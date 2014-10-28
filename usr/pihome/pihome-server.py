@@ -17,56 +17,26 @@ from os import curdir, sep, path
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 
 
-# Set GPIO Pins !! Do Not Change !!
+# Set GPIO Pins
+# !! Only Change if you know what you are doing !!
+a = 24
+b = 25
+c = 8
+d = 7
+on = 18
+off = 23
 c1 = 17
 c2 = 22
 c3 = 10
 c4 = 9
 c5 = 11
-on = 18
-off = 23
-a = 24
-b = 25
-c = 8
-d = 7
 
 # Set to use IO No.
 GPIO.setmode(GPIO.BCM)
 
-
-GPIO.setup(a, GPIO.OUT)
-GPIO.output(a, False)
-
-GPIO.setup(b, GPIO.OUT)
-GPIO.output(b, False)
-
-GPIO.setup(c, GPIO.OUT)
-GPIO.output(c, False)
-
-GPIO.setup(d, GPIO.OUT)
-GPIO.output(d, False)
-
-GPIO.setup(on, GPIO.OUT)
-GPIO.output(on, False)
-
-GPIO.setup(off, GPIO.OUT)
-GPIO.output(off, False)
-
-GPIO.setup(c1, GPIO.OUT)
-GPIO.output(c1, False)
-
-GPIO.setup(c2, GPIO.OUT)
-GPIO.output(c2, False)
-
-GPIO.setup(c3, GPIO.OUT)
-GPIO.output(c3, False)
-
-GPIO.setup(c4, GPIO.OUT)
-GPIO.output(c4, False)
-
-GPIO.setup(c5, GPIO.OUT)
-GPIO.output(c5, False)
-
+for i in (a, b, c, d, on, off, c1, c2, c3, c4, c5):
+  GPIO.setup(gpio_pin, GPIO.OUT)
+  GPIO.output(gpio_pin, False)
 
 
 class Handler(BaseHTTPRequestHandler):
