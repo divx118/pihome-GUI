@@ -34,7 +34,7 @@ c5 = 11
 # Set to use IO No.
 GPIO.setmode(GPIO.BCM)
 
-for i in (a, b, c, d, on, off, c1, c2, c3, c4, c5):
+for gpio_pin in (a, b, c, d, on, off, c1, c2, c3, c4, c5):
   GPIO.setup(gpio_pin, GPIO.OUT)
   GPIO.output(gpio_pin, False)
 
