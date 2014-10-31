@@ -3,7 +3,7 @@
 # PiHome v1.0
 # http://pihome.harkemedia.de/
 # 
-# PiHome Copyright © 2012, Sebastian Harke
+# PiHome Copyright 2012, Sebastian Harke
 # Lizenz Informationen.
 # 
 # This work is licensed under the Creative Commons Namensnennung - Nicht-kommerziell - Weitergabe unter gleichen Bedingungen 3.0 Unported License. To view a copy of this license,
