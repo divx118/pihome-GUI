@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 # PiHome v1.0
 # http://pihome.harkemedia.de/
@@ -12,6 +12,7 @@
 
 import time
 import RPi.GPIO as GPIO
+print "starting this"
 import cgi,time,string,datetime
 from os import curdir, sep, path
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
