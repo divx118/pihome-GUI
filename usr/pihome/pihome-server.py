@@ -47,7 +47,7 @@ class Handler(BaseHTTPRequestHandler):
         	self.end_headers()
         	datastring = str(self.path).split("request/")[1].split("/")
                 # Check the received string
-                if bool(re.match("[a-d]", string.lower(datastring[0]), flags = 0)):
+                if bool(re.match("^[a-d]$", string.lower(datastring[0]), flags = 0)):
                   letter = eval(string.lower(datastring[0]))
                   if bool(re.match("^(on|off)$", string.lower(datastring[1]), flags = 0)):
         	    status = eval(string.lower(datastring[1]))
