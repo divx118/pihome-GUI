@@ -12,8 +12,7 @@
 
 import time
 import RPi.GPIO as GPIO
-print "starting this"
-import cgi,time,string,datetime
+import cgi,time,string,datetime,re
 from os import curdir, sep, path
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 
@@ -45,77 +44,31 @@ class Handler(BaseHTTPRequestHandler):
         try:
         	self.send_response(200)
         	self.send_header('Content-type', 'text/html')
-        	self.end_headers()        	
-        	
-        	datastring = str(self.path).split("request/")[1]        	
-        	letter = datastring.split("/")[0]
-        	letter = string.upper(letter)
-        	status = datastring.split("/")[1]
-        	status = string.lower(status)
-        	code = datastring.split("/")[2]        	
-        	code1 = code[0]
-        	code2 = code[1]
-        	code3 = code[2]
-        	code4 = code[3]
-        	code5 = code[4]
-        	
-        	# Testing
-        	#self.wfile.write(datastring)
-	       	
-	       	if letter != "":
-				if letter == "A":
-					GPIO.output(a, True)
-				elif letter == "B":
-					GPIO.output(b, True)
-				elif letter == "C":
-					GPIO.output(c, True)
-				elif letter == "D":
-					GPIO.output(d, True)
-				
-				if status == "on":
-					GPIO.output(on, True)
-				elif status == "off":
-					GPIO.output(off, True)
-				
-				if code1 == "1":
-					GPIO.output(c1, True)
-				if code2 == "1":
-					GPIO.output(c2, True)
-				if code3 == "1":
-					GPIO.output(c3, True)
-				if code4 == "1":
-					GPIO.output(c4, True)
-				if code5 == "1":
-					GPIO.output(c5, True)
-				
-				time.sleep(1)
-				
-				if letter == "A":
-					GPIO.output(a, False)
-				elif letter == "B":
-					GPIO.output(b, False)
-				elif letter == "C":
-					GPIO.output(c, False)
-				elif letter == "D":
-					GPIO.output(d, False)
-					
-				if status == "on":
-					GPIO.output(on, False)
-				elif status == "off":
-					GPIO.output(off, False)
-				
-				if code1 == "1":
-					GPIO.output(c1, False)
-				if code2 == "1":
-					GPIO.output(c2, False)
-				if code3 == "1":
-					GPIO.output(c3, False)
-				if code4 == "1":
-					GPIO.output(c4, False)
-				if code5 == "1":
-					GPIO.output(c5, False)
-				
-				time.sleep(0.5)
+        	self.end_headers()
+        	datastring = str(self.path).split("request/")[1].split("/")
+                # Check the received string
+                if bool(re.match("[a-d]", string.lower(datastring[0]), flags = 0)):
+                  letter = eval(string.lower(datastring[0]))
+                  if bool(re.match("^(on|off)$", string.lower(datastring[1]), flags = 0)):
+        	    status = eval(string.lower(datastring[1]))
+        	    if bool(re.match("^([0-1]{5})$",datastring[2],flags = 0)):
+                      # Set the right GPIO pins high
+                      i = 1
+                      for code in datastring[2]:
+                        GPIO.output(eval("c" + str(i)), bool(int(code)))
+                        i+=1
+                      GPIO.output(letter, True)
+                      GPIO.output(status, True)
+                      # Time to send the signal
+                      time.sleep(1)
+                      # Set all used GPIO pins low again
+                      i = 1
+                      for code in datastring[2]:
+                        GPIO.output(eval("c" + str(i)), False)
+                        i+=1
+                      GPIO.output(letter, False)
+                      GPIO.output(status, False)     					
+		time.sleep(0.5)
 		return
 	except IOError:
 		self.send_error(404,'File Not Found: ' + self.path)
